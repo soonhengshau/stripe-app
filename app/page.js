@@ -6,10 +6,9 @@ export default function Home() {
   const router = useRouter();
   const [state, setState] = useState([]);
 
-  // Sample static data (you can replace this with data from an API)
   const [data] = useState([
     ["Alvin Khoo", "2024-10-29", "7:00pm", 1],
-    ["Charlotte Li", "2024-10-29", "7:00pm", 1],
+    ["Clarissa Li", "2024-10-29", "7:00pm", 1],
     ["Chloe Chiam", "2024-10-29", "7:00pm", 1],
     ["Joyce Ng", "2024-10-29", "7:00pm", 1],
     ["Liu Yuqi", "2024-10-29", "7:00pm", 1],
@@ -25,7 +24,9 @@ export default function Home() {
     const getData = async () => {
       const response = await fetch("/api/db");
       const data = await response.json();
-      setState(data);
+      if (response.ok) {
+        setState(data);
+      }
     };
 
     getData();
@@ -42,44 +43,55 @@ export default function Home() {
   );
 
   return (
-    <div className="min-h-screen flex flex-col items-center justify-center">
-      {/* Table to display the data */}
-      <div className="mt-8">
+    <div className="min-h-screen flex flex-col items-center justify-center px-4">
+      <div className="mt-8 w-full">
         <h2 className="text-xl text-center mb-4">Test Registrations</h2>
-        <div className="overflow-auto">
-          <table className="table-auto border-collapse border border-gray-300">
+
+        {/* Wrapping the table inside a div with overflow for mobile responsiveness */}
+        <div className="overflow-x-auto w-full">
+          <table className="table-auto border-collapse border border-gray-300 w-full min-w-max">
             <thead>
               <tr>
-                <th className="border border-gray-300 px-4 py-2">Name</th>
-                <th className="border border-gray-300 px-4 py-2">Date</th>
-                <th className="border border-gray-300 px-4 py-2">Time</th>
-                <th className="border border-gray-300 px-4 py-2">Level</th>
-                <th>Action</th>
+                <th className="border border-gray-300 px-2 py-2 text-sm md:text-base">
+                  Name
+                </th>
+                <th className="border border-gray-300 px-2 py-2 text-sm md:text-base">
+                  Date
+                </th>
+                <th className="border border-gray-300 px-2 py-2 text-sm md:text-base">
+                  Time
+                </th>
+                <th className="border border-gray-300 px-2 py-2 text-sm md:text-base">
+                  Level
+                </th>
+                <th className="border border-gray-300 px-2 py-2 text-sm md:text-base">
+                  Action
+                </th>
               </tr>
             </thead>
             <tbody>
               {data.map((entry) => (
                 <tr key={entry[0]}>
-                  <td className="border border-gray-300 px-4 py-2">
+                  <td className="border border-gray-300 px-2 py-2 text-sm md:text-base">
                     {entry[0]}
                   </td>
-                  <td className="border border-gray-300 px-4 py-2">
+                  <td className="border border-gray-300 px-2 py-2 text-sm md:text-base">
                     {entry[1]}
                   </td>
-                  <td className="border border-gray-300 px-4 py-2">
+                  <td className="border border-gray-300 px-2 py-2 text-sm md:text-base">
                     {entry[2]}
                   </td>
-                  <td className="border border-gray-300 px-4 py-2">
+                  <td className="border border-gray-300 px-2 py-2 text-sm md:text-base">
                     {entry[3]}
                   </td>
-                  <td className="border border-gray-300 px-4 py-2">
+                  <td className="border border-gray-300 px-2 py-2">
                     {state.some((arr) => entry[0] === arr.child1_name) ? (
-                      <button className="mt-4 px-4 py-2 bg-gray-500 text-white rounded-md">
+                      <button className="mt-2 px-2 py-1 bg-gray-500 text-white text-sm rounded-md">
                         Booked
                       </button>
                     ) : (
                       <button
-                        className="mt-4 px-4 py-2 bg-blue-500 text-white rounded-md"
+                        className="mt-2 px-2 py-1 bg-blue-500 text-white text-sm rounded-md"
                         onClick={() =>
                           handleBookTest(entry[0], entry[1], entry[2])
                         }

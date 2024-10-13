@@ -1,8 +1,6 @@
 {
   "/page": "app/page.js",
-  "/favicon.ico/route": "app/favicon.ico/route.js",
   "/registration/page": "app/registration/page.js",
-  "/api/checkout_sessions/route": "app/api/checkout_sessions/route.js",
-  "/cancel/page": "app/cancel/page.js",
+  "/favicon.ico/route": "app/favicon.ico/route.js",
   "/api/db/route": "app/api/db/route.js"
 }
