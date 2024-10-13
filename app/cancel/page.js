@@ -5,7 +5,7 @@ export default function CancelPage() {
   const router = useRouter();
 
   const handleGoBack = () => {
-    router.push("/registration");
+    router.push("/");
   };
 
   return (
