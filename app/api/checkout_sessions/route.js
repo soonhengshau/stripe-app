@@ -29,7 +29,7 @@ export async function POST(req) {
 
     // Create Stripe Checkout session
     const session = await stripe.checkout.sessions.create({
-      payment_method_types: ["card"],
+      payment_method_types: ["card", "paynow"],
       line_items: line_items,
       mode: "payment",
       success_url: `${req.headers.get("origin")}/success`,
