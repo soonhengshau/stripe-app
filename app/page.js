@@ -45,70 +45,67 @@ export default function Home() {
   return (
     <div className="min-h-screen flex flex-col items-center justify-center px-4">
       <div className="mt-8 w-full">
-        {expire < new Date() ? (
-          <h2 className="text-xl text-center mb-4">Registration is closed!</h2>
-        ) : (
-          /* Wrapping the table inside a div with overflow for mobile responsiveness */
-          <div className="overflow-x-auto w-11/12 lg:w-1/2 mx-auto">
-            <h2 className="text-xl text-center mb-4">Test Registrations</h2>
-            <table className="table-auto border-collapse border border-gray-300 w-full min-w-max">
-              <thead>
-                <tr>
-                  <th className="border border-gray-300 px-2 py-2 text-sm md:text-base">
-                    Name
-                  </th>
-                  <th className="border border-gray-300 px-2 py-2 text-sm md:text-base">
-                    Date
-                  </th>
-                  <th className="border border-gray-300 px-2 py-2 text-sm md:text-base">
-                    Time
-                  </th>
-                  <th className="border border-gray-300 px-2 py-2 text-sm md:text-base">
-                    Level
-                  </th>
-                  <th className="border border-gray-300 px-2 py-2 text-sm md:text-base">
-                    Action
-                  </th>
+        <h2 className="text-xl text-center mb-4">Test Registrations</h2>
+
+        {/* Wrapping the table inside a div with overflow for mobile responsiveness */}
+        <div className="overflow-x-auto w-full">
+          <table className="table-auto border-collapse border border-gray-300 w-full min-w-max">
+            <thead>
+              <tr>
+                <th className="border border-gray-300 px-2 py-2 text-sm md:text-base">
+                  Name
+                </th>
+                <th className="border border-gray-300 px-2 py-2 text-sm md:text-base">
+                  Date
+                </th>
+                <th className="border border-gray-300 px-2 py-2 text-sm md:text-base">
+                  Time
+                </th>
+                <th className="border border-gray-300 px-2 py-2 text-sm md:text-base">
+                  Level
+                </th>
+                <th className="border border-gray-300 px-2 py-2 text-sm md:text-base">
+                  Action
+                </th>
+              </tr>
+            </thead>
+            <tbody>
+              {data.map((entry) => (
+                <tr key={entry[0]}>
+                  <td className="border border-gray-300 px-2 py-2 text-sm md:text-base">
+                    {entry[0]}
+                  </td>
+                  <td className="border border-gray-300 px-2 py-2 text-sm md:text-base">
+                    {entry[1]}
+                  </td>
+                  <td className="border border-gray-300 px-2 py-2 text-sm md:text-base">
+                    {entry[2]}
+                  </td>
+                  <td className="border border-gray-300 px-2 py-2 text-sm md:text-base">
+                    {entry[3]}
+                  </td>
+                  <td className="border border-gray-300 px-2 py-2">
+                    {state.some((arr) => entry[0] === arr.child1_name) ? (
+                      <button className="mt-2 px-2 py-1 bg-gray-500 text-white text-sm rounded-md">
+                        Booked
+                      </button>
+                    ) : (
+                      <button
+                        className="mt-2 px-2 py-1 bg-blue-500 text-white text-sm rounded-md"
+                        onClick={() =>
+                          handleBookTest(entry[0], entry[1], entry[2])
+                        }
+                        aria-label={`Book test for ${entry[0]}`}
+                      >
+                        Book Now
+                      </button>
+                    )}
+                  </td>
                 </tr>
-              </thead>
-              <tbody>
-                {data.map((entry) => (
-                  <tr key={entry[0]}>
-                    <td className="border border-gray-300 px-2 py-2 text-sm md:text-base">
-                      {entry[0]}
-                    </td>
-                    <td className="border border-gray-300 px-2 py-2 text-sm md:text-base">
-                      {entry[1]}
-                    </td>
-                    <td className="border border-gray-300 px-2 py-2 text-sm md:text-base">
-                      {entry[2]}
-                    </td>
-                    <td className="border border-gray-300 px-2 py-2 text-sm md:text-base text-center">
-                      {entry[3]}
-                    </td>
-                    <td className="border border-gray-300 px-2 py-2 text-center">
-                      {state.some((arr) => entry[0] == arr.child1_name) ? (
-                        <button className="mt-2 px-2 py-1 bg-gray-500 text-white text-sm rounded-md">
-                          Booked
-                        </button>
-                      ) : (
-                        <button
-                          className="mt-2 px-2 py-1 bg-blue-500 text-white text-sm rounded-md"
-                          onClick={() =>
-                            handleBookTest(entry[0], entry[1], entry[2])
-                          }
-                          aria-label={`Book test for ${entry[0]}`}
-                        >
-                          Book Now
-                        </button>
-                      )}
-                    </td>
-                  </tr>
-                ))}
-              </tbody>
-            </table>
-          </div>
-        )}
+              ))}
+            </tbody>
+          </table>
+        </div>
       </div>
     </div>
   );
