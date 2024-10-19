@@ -5,19 +5,19 @@ import { useCallback, useEffect, useState } from "react";
 export default function Home() {
   const router = useRouter();
   const [state, setState] = useState([]);
-  const [expire, setExpire] = useState(new Date("2024-10-15"));
+  const [expire, setExpire] = useState(new Date("2024-11-15"));
   const [data] = useState([
-    ["Alvin Khoo", "2024-10-29", "7:00pm", 1],
-    ["Clarissa Li", "2024-10-29", "7:00pm", 1],
-    ["Chloe Chiam", "2024-10-29", "7:00pm", 1],
-    ["Joyce Ng", "2024-10-29", "7:00pm", 1],
-    ["Liu Yuqi", "2024-10-29", "7:00pm", 1],
-    ["Amy Li", "2024-10-29", "7:00pm", 2],
-    ["Ang Ja Vier", "2024-10-29", "6:00pm", 3],
-    ["Clarence Lim", "2024-10-29", "6:00pm", 3],
-    ["Alyssa Li", "2024-10-29", "6:00pm", 4],
-    ["Chloe Ow", "2024-10-29", "6:00pm", 4],
-    ["Coen Chiam", "2024-10-29", "6:00pm", 4],
+    ["1", "Alvin Khoo", "2024-10-29", "7:00pm", 1],
+    ["2", "Clarissa Li", "2024-10-29", "7:00pm", 1],
+    ["3", "Chloe Chiam", "2024-10-29", "7:00pm", 1],
+    ["4", "Joyce Ng", "2024-10-29", "7:00pm", 1],
+    ["5", "Liu Yuqi", "2024-10-29", "7:00pm", 1],
+    ["6", "Amy Li", "2024-10-29", "7:00pm", 2],
+    ["7", "Ang Ja Vier", "2024-10-29", "6:00pm", 3],
+    ["8", "Clarence Lim", "2024-10-29", "6:00pm", 3],
+    ["9", "Alyssa Li", "2024-10-29", "6:00pm", 4],
+    ["10", "Chloe Ow", "2024-10-29", "6:00pm", 4],
+    ["11", "Coen Chiam", "2024-10-29", "6:00pm", 4],
   ]);
 
   useEffect(() => {
@@ -25,7 +25,8 @@ export default function Home() {
       const response = await fetch("/api/db");
       const data = await response.json();
       if (response.ok) {
-        setState(data);
+        // setState(data);
+        console.log(data);
       }
     };
 
@@ -33,7 +34,8 @@ export default function Home() {
   }, []);
 
   const handleBookTest = useCallback(
-    (name, date, time) => {
+    (userId, name, date, time) => {
+      localStorage.setItem("userId", userId);
       localStorage.setItem("name", name);
       localStorage.setItem("date", date);
       localStorage.setItem("time", time);
@@ -43,7 +45,7 @@ export default function Home() {
   );
 
   return (
-    <div className="min-h-screen flex flex-col items-center justify-center px-4">
+    <div className="min-h-screen flex flex-col items-center justify-center px-2">
       <div className="mt-8 w-full">
         {expire < new Date() ? (
           <h2 className="text-xl text-center mb-4">Registration is closed!</h2>
@@ -52,7 +54,7 @@ export default function Home() {
 
           <div className="overflow-x-auto w-11/12 lg:w-1/2 mx-auto">
             <h2 className="text-xl text-center mb-4">Test Registrations</h2>
-            <table className="table-auto border-collapse border border-gray-300 w-full min-w-max">
+            <table className="table-auto border-collapse border border-gray-300 w-full">
               <thead>
                 <tr>
                   <th className="border border-gray-300 px-2 py-2 text-sm md:text-base">
@@ -76,19 +78,19 @@ export default function Home() {
                 {data.map((entry) => (
                   <tr key={entry[0]}>
                     <td className="border border-gray-300 px-2 py-2 text-sm md:text-base">
-                      {entry[0]}
-                    </td>
-                    <td className="border border-gray-300 px-2 py-2 text-sm md:text-base">
                       {entry[1]}
                     </td>
                     <td className="border border-gray-300 px-2 py-2 text-sm md:text-base">
                       {entry[2]}
                     </td>
-                    <td className="border border-gray-300 px-2 py-2 text-sm md:text-base text-center">
+                    <td className="border border-gray-300 px-2 py-2 text-sm md:text-base">
                       {entry[3]}
                     </td>
+                    <td className="border border-gray-300 px-2 py-2 text-sm md:text-base text-center">
+                      {entry[4]}
+                    </td>
                     <td className="border border-gray-300 px-2 py-2 text-center">
-                      {state.some((arr) => entry[0] === arr.child1_name) ? (
+                      {state.some((arr) => entry[1] === arr.child1_name) ? (
                         <button className="mt-2 px-2 py-1 bg-gray-500 text-white text-sm rounded-md">
                           Booked
                         </button>
@@ -96,9 +98,14 @@ export default function Home() {
                         <button
                           className="mt-2 px-2 py-1 bg-blue-500 text-white text-sm rounded-md"
                           onClick={() =>
-                            handleBookTest(entry[0], entry[1], entry[2])
+                            handleBookTest(
+                              entry[0],
+                              entry[1],
+                              entry[2],
+                              entry[3]
+                            )
                           }
-                          aria-label={`Book test for ${entry[0]}`}
+                          aria-label={`Book test for ${entry[1]}`}
                         >
                           Book Now
                         </button>
